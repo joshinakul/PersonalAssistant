@@ -1,5 +1,5 @@
 import cv2
-img = cv2.imread('Data/nj.jpg',0)
+img = cv2.imread('Data/nj.jpg')
 cascade = cv2.CascadeClassifier('Haarcascade/myfacehaarcascade.xml')
 faces = cascade.detectMultiScale(img,1.5,4)
 for (x,y,w,h) in faces:
