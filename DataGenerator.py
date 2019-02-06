@@ -10,6 +10,7 @@ import cv2
 import os
 import csv
 from FaceDetector import detect_face
+import time
 
 
 class CreateData():
@@ -96,7 +97,7 @@ class CreateData():
     def generate_images(self):
         self.count=0
         cap=cv2.VideoCapture(0)# start vidocapture
-        
+        sample_num=0
         # ggenerate user name and id
         user,Id=self.create_data()
         while True:
@@ -113,16 +114,19 @@ class CreateData():
                     
                     continue;
                 else:
-                    sample_num=0
+                    
                     for _ in faces:
                         
                         
                         # take 50 photos
-                        while sample_num<50:
-                            img_name="Data/"+user+"_"+str(Id)+"/{}.png".format(sample_num)
-                            cv2.imwrite(img_name,frame)
-                            sample_num+1
+                       
+                        img_name="Data/"+user+"_"+str(Id)+"/{}.png".format(sample_num)
+                        cv2.imwrite(img_name,frame)
+                        sample_num+=1
                         print("Data Created for {}".format(user))
+                        time.sleep(0.8)
+                if sample_num>50:
+                    break
                 # close frame
                 if k%256==27:
                     print("Escape Hit")
