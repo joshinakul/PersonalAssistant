@@ -9,8 +9,9 @@ Created on Wed Feb  6 17:33:05 2019
 import cv2
 import os
 import csv
-from FaceDetector import detect_face
+from FaceDetector import DetectFace
 import time
+
 
 
 class CreateData():
@@ -18,12 +19,14 @@ class CreateData():
     id=0
     Users={}
     
+    
     def __init__(self):
         self.generate_images()
         
         
+   
     def detect_face(self,img):
-        return detect_face(img)
+        return DetectFace.detect_face(img)
     """
     function: Create_dir
          create the directory if not already present
@@ -41,36 +44,24 @@ class CreateData():
     
     """
     function :create_data
-
     parameter:
-        self
-    
+            self
     return:
-        self.user=user name
-        self.id=present id value
+            self.user=user name
+            self.id=present id value
         
     """
     def create_data(self):
-    
-        
         user=str(input("Enter user name:"))
         self.id+=1
-        
-        
-        #writing to users dictionary   
-        self.Users[user]=self.id
-        
-        # create dir for cuurent user
-        self.create_dir("Data/"+user+"_"+str(self.id))
-        
-        
+        self.Users[user]=self.id #writing to users dictionary
+        self.create_dir("Data/"+user+"_"+str(self.id))# create dir for cuurent user
         return user,self.id
     
     
     """
     function :write to csv
-    
-              write user data to csv file    
+                write user data to csv file    
     parameter:
               self
     return:
@@ -86,10 +77,8 @@ class CreateData():
     """
     function :generate_images
         Click images if face is detected .
-        
     parameter:
         self
-    
     return:
         None
         
@@ -103,28 +92,27 @@ class CreateData():
         while True:
             ret ,frame=cap.read() # read frame 
             if ret:
-                cv2.imshow('frame',frame)
-                cv2.namedWindow("frame",cv2.WINDOW_NORMAL)
                 k=cv2.waitKey(100)
                 faces=self.detect_face(frame) # Detectface
                 
                 # check if faces are found
                 if len(faces)==0:
                     print("no faces detected")
-                    
                     continue;
                 else:
                     
                     for _ in faces:
-                        
-                        
-                        # take 50 photos
-                       
+                        # set image name
                         img_name="Data/"+user+"_"+str(Id)+"/{}.png".format(sample_num)
+                        # Save image
                         cv2.imwrite(img_name,frame)
-                        sample_num+=1
-                        print("Data Created for {}".format(user))
+                        sample_num+=1 # increment sample num variable
+                        print("{}-Data Created for {}".format(sample_num,user))
                         time.sleep(0.8)
+                
+                cv2.imshow('frame',frame)
+                cv2.namedWindow("frame",cv2.WINDOW_NORMAL)
+                
                 if sample_num>50:
                     break
                 # close frame
