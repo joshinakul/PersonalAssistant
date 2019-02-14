@@ -59,8 +59,11 @@ if __name__=="__main__":
     model=m.models()
     face_model=train(model,classes,learning_rate,epochs,batch_size)
     
-    
-    face_model.save("Face_reco_1.MODEL")
+    if not os.path.exist("Models"):
+        os.mkdir("Models")
+    no_of_Models=len(os.listdir("Models"))
+        
+    face_model.save("Models/Face_reco_{}.MODEL".format(no_of_Models+1))
     
     
     
