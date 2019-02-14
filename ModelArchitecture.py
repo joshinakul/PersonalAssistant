@@ -18,7 +18,7 @@ class Model():
         self.classes=classes
         
     
-    def model(self):
+    def models(self):
         
         self.model.add(Dense(64,input_dim=128))
         self.model.add(LeakyReLU(alpha=0.1))
