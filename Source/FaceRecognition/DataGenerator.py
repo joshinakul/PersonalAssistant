@@ -90,7 +90,8 @@ class CreateData():
         # ggenerate user name and id
         user,Id=self.create_data()
         while True:
-            ret ,frame=cap.read() # read frame 
+            ret ,frame=cap.read()
+            frame = cv2.resize(frame,(600,400))  
             if ret:
                 k=cv2.waitKey(100)
                 faces=self.detect_face(frame) # Detectface
@@ -108,7 +109,7 @@ class CreateData():
                         cv2.imwrite(img_name,frame)
                         sample_num+=1 # increment sample num variable
                         print("{}-Data Created for {}".format(sample_num,user))
-                        time.sleep(0.8)
+                        
                 
                 cv2.imshow('frame',frame)
                 cv2.namedWindow("frame",cv2.WINDOW_NORMAL)
